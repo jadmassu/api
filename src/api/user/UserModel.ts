@@ -21,3 +21,23 @@
 // })
 
 // module.exports = User
+
+// models/User.ts
+import { DataTypes, Sequelize } from 'sequelize';
+const { BaseModel } = require('../BaseModel');
+
+export interface UserAttributes {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+export class User extends BaseModel<User> implements UserAttributes {
+    firstName!: string;
+    lastName!: string;
+    email!: string;
+
+    static associate(models: any): void {
+        // define association here
+    }
+}
