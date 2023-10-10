@@ -12,7 +12,7 @@ const getUsers = async (req, res) => {
 const postUsers = async (req, res) => {
     try {
         const user = req.body
-        console.log("user is", user)
+        console.log("user is", req.app)
         res.status(200).json(user)
         // const data = await User.create(user)
     }
