@@ -1,24 +1,40 @@
-// models/BaseModel.ts
-import { Sequelize } from 'sequelize';
-const { Model, DataTypes } = require("sequelize");
-// const Sequelize = require("sequelize");
-export abstract class BaseModel<T extends BaseModel<T>> extends Model<T> {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
+import { Sequelize, Model, DataTypes, ModelCtor, Optional, ModelAttributes } from 'sequelize';
 
-    static initialize(sequelize: Sequelize): void {
-        this.init(
+interface BaseModelAttributes {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export abstract class BaseModel<T extends BaseModelAttributes> extends Model<T> {
+    public id!: number;
+    public createdAt!: Date;
+    public updatedAt!: Date;
+
+    static initialize<T extends BaseModelAttributes>(
+        this: ModelCtor<BaseModel<T>>,
+        sequelize: Sequelize
+    ): void {
+        (this.init as (attributes: ModelAttributes<BaseModel<T>, any>, options?: any) => void)(
             {
                 id: {
                     type: DataTypes.INTEGER,
                     autoIncrement: true,
                     primaryKey: true,
                 },
-                createdAt: DataTypes.DATE,
-                updatedAt: DataTypes.DATE,
+                createdAt: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                },
+                updatedAt: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                },
             },
-            { sequelize, modelName: this.name }
+            {
+                sequelize,
+                modelName: this.name,
+            }
         );
     }
 }

@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-import User, { UserAttributes } from './UserModel';
+import { User, UserAttributes } from './User.model';
 import { BaseRepository } from '../BaseRepository';
 
 export class UserRepository extends BaseRepository<User> {

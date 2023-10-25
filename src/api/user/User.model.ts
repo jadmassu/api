@@ -24,7 +24,7 @@
 
 // models/User.ts
 import { DataTypes, Sequelize } from 'sequelize';
-const { BaseModel } = require('../BaseModel');
+import { BaseModel } from '../BaseModel';
 
 export interface UserAttributes {
     firstName: string;

@@ -1,14 +1,15 @@
 // repositories/BaseRepository.ts
-import { Model, DestroyOptions } from 'sequelize';
+import { Model, DestroyOptions, ModelCtor } from 'sequelize';
+import { Model as TypeModel } from 'sequelize-typescript';
 
 export abstract class BaseRepository<T extends Model<T>> {
-    constructor(private model: typeof Model) { }
+    constructor(private model: ModelCtor<Model>) { }
 
     async create(data: Partial<T>): Promise<T> {
         try {
-            return await this.model.create(data);
+            return await this.model.create(data) as T;
         } catch (error) {
-            throw new Error(`Error creating record: ${error.message}`);
+            throw new Error(`Error creating record: ${(error as Error).message}`);
         }
     }
 
@@ -22,7 +23,7 @@ export abstract class BaseRepository<T extends Model<T>> {
         try {
             return await this.model.destroy(destroyOptions);
         } catch (error) {
-            throw new Error(`Error deleting multiple records: ${error.message}`);
+            throw new Error(`Error creating record: ${(error as Error).message}`);
         }
     }
 }
