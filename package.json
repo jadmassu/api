@@ -1,12 +1,13 @@
 {
+
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon -L index.js"
+    "start": "tsc && node dist/index.js",
+    "dev": "nodemon --watch src --exec ts-node src/index.ts"
   },
   "author": "eyerusalem",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "@types/express": "^4.17.18",
     "nodemon": "^3.0.1",
     "sequelize-cli": "^6.6.1",
-    "sequelize-typescript": "^2.1.5"
+    "sequelize-typescript": "^2.1.5",
+    "ts-node": "^10.9.1"
   }
 }
