@@ -23,7 +23,7 @@
 // module.exports = User
 
 // models/User.ts
-import { DataTypes, Sequelize } from 'sequelize';
+
 import { BaseModel } from '../BaseModel';
 
 export interface UserAttributes {

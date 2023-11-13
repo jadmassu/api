@@ -1,4 +1,3 @@
-import { Model } from 'sequelize';
 import { User, UserAttributes } from './User.model';
 import { BaseRepository } from '../BaseRepository';
 
