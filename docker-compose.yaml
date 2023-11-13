@@ -4,10 +4,14 @@ services:
     build: .
     ports:
       - "3000:3000"
-    version: 
-      - ./:/app
-      - /app/node_modules
+    # version: 
+    #   - ./:/app
+    #   - /app/node_modules
     environment:
       - ports=3000
-    env_file:
-      - ./.env  
+    # env_file:
+    #   - ./.env  
+    #depends_on:
+     # - serviceName
+
+     

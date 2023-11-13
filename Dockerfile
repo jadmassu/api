@@ -6,7 +6,11 @@ COPY package.json /app
 RUN npm install
 COPY .  ./
 EXPOSE  3000
-CMD [ "node", "run", "dev"]
+CMD ["node", "index.js"]
+
+
+# CMD [ "node", "run", "dev"]
+
 # RUN addgroup -g 1000 node \
 #     && adduser -u 1000 -G node -s /bin/sh -D node \
 #     && apk add --no-cache \

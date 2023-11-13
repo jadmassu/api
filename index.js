@@ -2,10 +2,13 @@
 
 const express = require("express");
 const app = express();
+app.use(express.json({ limit: "500mb" }));
 
+
+app.use("/user", require("./api/user/UserApi"))
 
 app.get("/", (req, res) => {
-    res.send("<h2>some message</h2>");
+    res.send("<h2>some mmessage</h2>");
 });
 
 const port = process.env.port || 3000
