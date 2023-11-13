@@ -2,6 +2,14 @@
 
 
 import express, { Application, Request, Response } from 'express';
+import { connectToDatabase } from './src/utils/sequelize';
+// import 'dotenv/config';
+// require("dotenv").config({ path: "./config.env" });
+import dotenv from 'dotenv';
+dotenv.config({ path: './config.env' });
+
+// import config from './config';
+
 
 const app: Application = express();
 
@@ -21,9 +29,11 @@ app.get("/", (req: Request, res: Response) => {
 
 });
 
+// connectToDatabase()
 
-
-const port = process.env.port || 3000
+const port = process.env.PORT || 3000
+console.log("", process.env["PORT"])
+console.log(`listening on porttt ${[process.env.PORT]}`)
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
