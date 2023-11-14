@@ -1,5 +1,5 @@
 // repositories/BaseRepository.ts
-import { Model, DestroyOptions, ModelCtor, FindOptions } from 'sequelize';
+import { Model, DestroyOptions, ModelCtor, FindOptions, Identifier, UpdateOptions, Attributes } from 'sequelize';
 import { Model as TypeModel } from 'sequelize-typescript';
 
 export abstract class BaseRepository<T extends Model> {
@@ -7,11 +7,28 @@ export abstract class BaseRepository<T extends Model> {
 
     }
 
+    async findOne(options?: FindOptions, identifier?: Identifier): Promise<T | null> {
+        try {
+            const result = await this.model.findByPk(identifier, options);
+            return result ? result.toJSON() as T : null;
+        }
+        catch (error) {
+            throw new Error(`Error creating record: ${(error as Error).message}`);
+
+        }
+
+    }
 
 
     async findAll(options?: FindOptions): Promise<T[]> {
-        const results = await this.model.findAll(options);
-        return results.map((result) => result.toJSON() as T);
+        try {
+            const results = await this.model.findAll(options);
+            return results.map((result) => result.toJSON() as T);
+        }
+        catch (error) {
+            throw new Error(`Error creating record: ${(error as Error).message}`);
+
+        }
     }
 
     async create(data: Partial<T>): Promise<T> {
@@ -22,7 +39,26 @@ export abstract class BaseRepository<T extends Model> {
         }
     }
 
-    // ... other methods
+
+    async update(data: Partial<T>, options?: UpdateOptions): Promise<T | null> {
+        try {
+            const [rowsAffected] = await this.model.update(data, options!);
+            if (rowsAffected === 0) {
+                return null;
+            }
+            const updatedData = await this.model.findOne(options);
+            return updatedData ? updatedData.toJSON() as T : null;
+        }
+        catch (error) {
+            throw new Error(`Error creating record: ${(error as Error).message}`);
+        }
+
+    }
+    // async update(data: Partial<T>, options: Omit<UpdateOptions<Attributes<T>>, 'returning'>
+    //     & { returning: Exclude<UpdateOptions<Attributes<T>>['returning'], undefined | false> }): Promise<[affectedCount: number, affectedRows: T[]]> {
+    //     const [affectedCount, affectedRows] = await this.model.update(data as Partial<T>, options);
+    //     return [affectedCount, affectedRows];
+    // }
 
     async deleteMultiple(ids: number[]): Promise<number> {
         const destroyOptions: DestroyOptions = {
@@ -32,6 +68,16 @@ export abstract class BaseRepository<T extends Model> {
         try {
             return await this.model.destroy(destroyOptions);
         } catch (error) {
+            throw new Error(`Error creating record: ${(error as Error).message}`);
+        }
+    }
+
+    async delete(options?: FindOptions): Promise<boolean> {
+        try {
+            const rowsAffected = await this.model.destroy(options);
+            return rowsAffected > 0;
+        }
+        catch (error) {
             throw new Error(`Error creating record: ${(error as Error).message}`);
         }
     }
