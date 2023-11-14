@@ -1,6 +1,6 @@
 import { Sequelize, Dialect } from 'sequelize';
 import dotenv from 'dotenv';
-console.log("--", process.env["DATABASE_USER"])
+dotenv.config({ path: './config.env' });
 
 
 export const sequelize = new Sequelize(process.env.DATABASE!, process.env.DATABASE_USER!, process.env.DATABASE_PASSWORD, {
@@ -10,7 +10,12 @@ export const sequelize = new Sequelize(process.env.DATABASE!, process.env.DATABA
 
 export async function connectToDatabase(): Promise<void> {
     try {
-        await sequelize.authenticate();
+        await sequelize.authenticate().then(async () => {
+            (async () => {
+                await sequelize.sync();
+                // await doStuffWithUser();
+            })();
+        });
         console.log('Connection to the database has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
