@@ -34,6 +34,7 @@ export class User extends Model<
     declare email: string;
 
     declare name: string | null;
+
     // declare userId: ForeignKey<User['id']>;
     // declare address: string;
 
@@ -57,7 +58,7 @@ User.init(
             type: new DataTypes.STRING(128),
             allowNull: false
         },
-        lastName: {
+        name: {
             type: new DataTypes.STRING(128),
             allowNull: false
         },
