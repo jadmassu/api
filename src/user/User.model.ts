@@ -1,28 +1,4 @@
-// const { INTEGER, STRING, BOOLEAN } = require("sequelize");
-// const User = sequelize.define("users", {
-//     id: {
-//         type: INTEGER,
-//         allowNull: false,
-//         autoIncrement: true,
-//         primaryKey: true,
-//     },
-//     userName: {
-//         type: STRING,
-//         allowNull: false
-//     },
-//     password: {
-//         type: STRING,
-//         allowNull: false
-//     },
-//     active: {
-//         type: BOOLEAN,
-//         allowNull: false
-//     }
-// })
 
-// module.exports = User
-
-// models/User.ts
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import { sequelize } from '../utils/sequelize';
 
@@ -34,6 +10,8 @@ export class User extends Model<
     declare email: string;
 
     declare name: string | null;
+    declare password: string;
+
     // declare userId: ForeignKey<User['id']>;
     // declare address: string;
 
@@ -52,15 +30,19 @@ User.init(
             allowNull: false,
             autoIncrement: true
         },
-
+        name: {
+            type: new DataTypes.STRING(128),
+            allowNull: false
+        },
         email: {
             type: new DataTypes.STRING(128),
             allowNull: false
         },
-        lastName: {
+        password: {
             type: new DataTypes.STRING(128),
             allowNull: false
         },
+
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,
     },
@@ -70,14 +52,5 @@ User.init(
     }
 );
 
-// export class User implements UserAttributes {
-//     id!: number;
-//     firstName!: string;
-//     lastName!: string;
-//     email!: string;
 
-//     // static associate(models: any): void {
-//     //     // define association here
-//     // }
-// }
 
