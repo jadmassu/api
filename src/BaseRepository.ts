@@ -1,9 +1,18 @@
 // repositories/BaseRepository.ts
-import { Model, DestroyOptions, ModelCtor } from 'sequelize';
+import { Model, DestroyOptions, ModelCtor, FindOptions } from 'sequelize';
 import { Model as TypeModel } from 'sequelize-typescript';
 
-export abstract class BaseRepository<T extends Model<T>> {
-    constructor(private model: ModelCtor<Model>) { }
+export abstract class BaseRepository<T extends Model> {
+    constructor(private model: ModelCtor<Model>) {
+
+    }
+
+
+
+    async findAll(options?: FindOptions): Promise<T[]> {
+        const results = await this.model.findAll(options);
+        return results.map((result) => result.toJSON() as T);
+    }
 
     async create(data: Partial<T>): Promise<T> {
         try {

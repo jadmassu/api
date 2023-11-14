@@ -1,4 +1,4 @@
-import { User, UserAttributes } from './User.model';
+import { User } from './User.model';
 import { BaseRepository } from '../BaseRepository';
 
 export class UserRepository extends BaseRepository<User> {
