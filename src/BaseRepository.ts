@@ -1,5 +1,5 @@
 // repositories/BaseRepository.ts
-import { Model, DestroyOptions, ModelCtor, FindOptions, Identifier, UpdateOptions, Attributes } from 'sequelize';
+import { Model, DestroyOptions, ModelCtor, FindOptions, Identifier, UpdateOptions } from 'sequelize';
 import { Model as TypeModel } from 'sequelize-typescript';
 
 export abstract class BaseRepository<T extends Model> {
@@ -18,7 +18,6 @@ export abstract class BaseRepository<T extends Model> {
         }
 
     }
-
 
     async findAll(options?: FindOptions): Promise<T[]> {
         try {
@@ -54,17 +53,11 @@ export abstract class BaseRepository<T extends Model> {
         }
 
     }
-    // async update(data: Partial<T>, options: Omit<UpdateOptions<Attributes<T>>, 'returning'>
-    //     & { returning: Exclude<UpdateOptions<Attributes<T>>['returning'], undefined | false> }): Promise<[affectedCount: number, affectedRows: T[]]> {
-    //     const [affectedCount, affectedRows] = await this.model.update(data as Partial<T>, options);
-    //     return [affectedCount, affectedRows];
-    // }
 
     async deleteMultiple(ids: number[]): Promise<number> {
         const destroyOptions: DestroyOptions = {
             where: { id: ids },
         };
-
         try {
             return await this.model.destroy(destroyOptions);
         } catch (error) {

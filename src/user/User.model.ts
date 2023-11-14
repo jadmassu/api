@@ -33,7 +33,7 @@ export class User extends Model<
     declare id: CreationOptional<number>
     declare email: string;
 
-    declare lastName: string | null;
+    declare name: string | null;
     // declare userId: ForeignKey<User['id']>;
     // declare address: string;
 
