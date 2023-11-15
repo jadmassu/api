@@ -12,7 +12,7 @@ export async function connectToDatabase(): Promise<void> {
     try {
         await sequelize.authenticate().then(async () => {
             (async () => {
-                await sequelize.sync();
+                await sequelize.sync({ alter: true });
                 // await doStuffWithUser();
             })();
         });
